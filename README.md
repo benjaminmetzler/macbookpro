@@ -3,8 +3,8 @@ This repo contains some configurations for setting up apps on a clean Macbook Pr
 
 # Requirements
 This has been tested on macOS Mojave.
-[Brew](https://brew.sh/)
-[Brew Cask](https://github.com/Homebrew/homebrew-cask)
+* [Brew](https://brew.sh/)
+* [Brew Cask](https://github.com/Homebrew/homebrew-cask)
 
 # What it sets up
 * [exiftool](https://exiftool.org/) - Good for tweaking and removing exif data
@@ -21,6 +21,6 @@ This has been tested on macOS Mojave.
 * [Itsycal](https://www.mowglii.com/itsycal/) - Nice little calendar app that replaces the menu clock
 * [MacVim](https://macvim-dev.github.io/macvim/) - Sometimes I need power text editing
 * [Visual Studio Code](https://code.visualstudio.com/) - Sometimes I need expandable text editing
-* [VLC](https://www.videolan.org/vlc/index.html)
+* [VLC](https://www.videolan.org/vlc/index.html) - Powerful media player
 
 
