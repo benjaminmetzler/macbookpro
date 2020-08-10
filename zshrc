@@ -39,5 +39,5 @@ unmark ld; mark ld
 cd ~
 
 # Starship prompt
-https://starship.rs/
+# https://starship.rs/
 eval "$(starship init zsh)"
