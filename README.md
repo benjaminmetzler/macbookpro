@@ -1,15 +1,25 @@
 # macbookpro
 This repo contains some configurations for setting up apps on a clean Macbook Pro.
 
-# Requirements
-This has been tested on macOS Mojave.
-* [Brew](https://brew.sh/)
-* [Brew Cask](https://github.com/Homebrew/homebrew-cask)
+There is an ansible yaml file that will install homebrew, various utilities and apps, and installs my .zshrc and spaceship.toml files.
+
+# Usage
+```bash
+# install pip
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py --user
+
+# install ansible
+$ pip install --user ansible
+
+# run the ansible configuration
+$ ansible-playbook -v setup_mbp.yaml
+```
+
 
 # What it sets up
 * [1Password](https://1password.com/) - Still my preferred password manager
 * [Alfred](https://www.alfredapp.com/) - Great application launcher and text expander
-* [Any.do](https://www.any.do/) - Keeps me on task...For the most part
 * [BetterTouchTool](https://folivora.ai/) - I like to tweak my OS and this makes it easier
 * [exiftool](https://exiftool.org/) - Good for removing exif data
 * [Firefox](https://www.mozilla.org/en-US/firefox/) - Still the best browser
