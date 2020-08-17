@@ -1,0 +1,89 @@
+---
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: check if homebrew is installed
+      stat:
+        path: /usr/local/bin/brew
+      register: brew_exists
+
+    - name: install homebrew
+      shell: yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      when: not brew_exists.stat.exists
+
+    - name: update homebrew and homebrew installed apps
+      homebrew:
+        update_homebrew: yes
+        upgrade_all: yes
+
+    - name: install base tools (homebrew)
+      homebrew:
+        name:
+          - python@3.8
+          - exiftool
+          - ffmpeg
+          - git
+          - id3lib
+          - imagemagick
+          - jq
+          - mp3wrap
+          - nmap
+          - rbenv
+          - rsync
+          - ruby
+          - starship
+          - the_silver_searcher
+          - tmate
+          - tmux
+          - watch
+          - wget
+          - youtube-dl
+        state: present
+
+   
+    - name: install ruby (homebrew)
+      homebrew:
+        name:
+          - rbenv
+          - ruby
+        state: present 
+
+    - name: install apps (homebrew)
+      homebrew_cask:
+        name:
+          - 1password
+          - alfred
+          - backblaze
+          - bettertouchtool
+          - cyberduck
+          - firefox
+          - font-source-code-pro
+          - gswitch
+          - inkscape
+          - itsycal
+          - java
+          - little-snitch
+          - macvim
+          - minecraft
+          - plex
+          - qbittorrent
+          - visual-studio-code
+          - vlc
+        state: present
+
+    - name: Copy zshrc into place
+      copy:
+        src: ./zshrc.template
+        dest: ~/.zshrc
+        owner: ben
+        group: staff
+        mode: '0644'
+
+    - name: Copy starship prompt configuration into place
+      copy:
+        src: ./starship.toml.template
+        dest: ~/.config/starship.toml
+        owner: ben
+        group: staff
+        mode: '0644'

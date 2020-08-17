@@ -9,7 +9,7 @@ style = "green"
 [hostname]
 ssh_only = false
 suffix = ":"
-trim_at = ".lan"
+trim_at = ".l"
 style = "green"
 
 

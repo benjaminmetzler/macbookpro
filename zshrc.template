@@ -38,6 +38,15 @@ alias ll='ls -lGa'
 unmark ld; mark ld 
 cd ~
 
+# Add ruby to the path
+export PATH="/Users/ben/.gem/ruby/2.7.0/bin:$PATH"
+eval "$(rbenv init -)"
+
+# Update python to python3
+alias python=/usr/local/bin/python3 
+alias pip=/usr/local/bin/pip3
+
+
 # Starship prompt
-https://starship.rs/
+# https://starship.rs/
 eval "$(starship init zsh)"
