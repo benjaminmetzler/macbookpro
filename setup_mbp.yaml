@@ -40,7 +40,6 @@
           - wget
           - youtube-dl
         state: present
-
    
     - name: install ruby (homebrew)
       homebrew:
@@ -76,7 +75,7 @@
       copy:
         src: ./zshrc.template
         dest: ~/.zshrc
-        owner: ben
+        owner: "{{ ansible_user_id }}"
         group: staff
         mode: '0644'
 
@@ -84,6 +83,6 @@
       copy:
         src: ./starship.toml.template
         dest: ~/.config/starship.toml
-        owner: ben
+        owner: "{{ ansible_user_id }}"
         group: staff
         mode: '0644'
