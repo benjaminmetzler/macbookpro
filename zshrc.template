@@ -3,7 +3,7 @@
 # 
 export ZSH_LOGS=~/.zsh_logs
 [[ -d ${ZSH_LOGS} ]] || mkdir ${ZSH_LOGS}
-export LOG_ZSH_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; fi'
+export LOG_ZSH_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history -1 | cut -c 8-)" >> ${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; fi'
 precmd() { eval "$LOG_ZSH_COMMAND" }
 
 # Grep though command logs
