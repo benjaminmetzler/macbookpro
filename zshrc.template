@@ -1,52 +1,55 @@
 
 # capture all commands to a log file
-# 
 export ZSH_LOGS=~/.zsh_logs
 [[ -d ${ZSH_LOGS} ]] || mkdir ${ZSH_LOGS}
-export LOG_ZSH_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history -1 | cut -c 8-)" >> ${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; fi'
+export LOG_ZSH_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") | $(pwd) | $(history -1 | cut -c 8-)" >> ${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; fi'
 precmd() { eval "$LOG_ZSH_COMMAND" }
 
 # Grep though command logs
-function hgrep { grep "$1" ~/.zsh_logs/*.log }
-
+function hg { grep "$1" ~/.zsh_logs/*.log }
+function hg1 { grep "$1" ~/.zsh_logs/${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; }
 
 # mark and jump directories
 # https://www.datascienceworkshops.com/blog/quickly-navigate-your-filesystem-from-the-command-line/
 export MARKPATH=$HOME/.marks
 function jump { 
-	cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
+    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
 }
 function mark { 
-	mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
+    mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
 function unmark { 
-	rm -if "$MARKPATH/$1"
+    rm -if "$MARKPATH/$1"
 }
 function marks {
-	ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
+    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/    -/g' && echo
 }
 
 # Aliases
 alias ls='ls -G'
 alias ll='ls -lGa'
 
-# Copy current directory and then switch to home
-# terminal.app/catalina opens the new terminal windows
-# in the current terminal CWD.  This is useful
-# sometimes, but I'd rather open into ~ with the option
-# of jumping to the working directory.
-unmark ld; mark ld 
-cd ~
+# Don't require escaping globbing characters in zsh.
+unsetopt nomatch
 
-# Add ruby to the path
-export PATH="/Users/ben/.gem/ruby/2.7.0/bin:$PATH"
-eval "$(rbenv init -)"
+# Tell homebrew to not autoupdate every single time I run it (just once a week).
+export HOMEBREW_AUTO_UPDATE_SECS=604800
 
-# Update python to python3
-alias python=/usr/local/bin/python3 
-alias pip=/usr/local/bin/pip3
+# Delete a given line number in the known_hosts file.
+knownrm() {
+ re='^[0-9]+$'
+ if ! [[ $1 =~ $re ]] ; then
+   echo "error: line number missing" >&2;
+ else
+   sed -i '' "$1d" ~/.ssh/known_hosts
+ fi
+}
 
 
-# Starship prompt
-# https://starship.rs/
+# Allow history search via up/down keys.
+source ${share_path}/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+
+# start up starship prompt
 eval "$(starship init zsh)"
