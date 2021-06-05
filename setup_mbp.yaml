@@ -20,18 +20,13 @@
     - name: install base tools (homebrew)
       homebrew:
         name:
-          - python@3.8
-          - exiftool
+          - python@3.9
           - ffmpeg
           - git
-          - id3lib
           - imagemagick
-          - jq
-          - mp3wrap
+          - mas
           - nmap
-          - rbenv
           - rsync
-          - ruby
           - starship
           - the_silver_searcher
           - tmate
@@ -40,13 +35,6 @@
           - wget
           - youtube-dl
         state: present
-   
-    - name: install ruby (homebrew)
-      homebrew:
-        name:
-          - rbenv
-          - ruby
-        state: present 
 
     - name: install apps (homebrew)
       homebrew_cask:
@@ -55,21 +43,34 @@
           - alfred
           - backblaze
           - bettertouchtool
-          - cyberduck
           - firefox
           - font-source-code-pro
-          - gswitch
-          - inkscape
+          - iterm
           - itsycal
           - java
-          - little-snitch
           - macvim
-          - minecraft
-          - plex
           - qbittorrent
+          - rectangle
           - visual-studio-code
           - vlc
         state: present
+        
+    - name: install mac store apps
+      command: "mas install {{ item }}"
+      loop:
+        - 890031187   # Marked 2
+        - 462062816   # Microsoft PowerPoint
+        - 462058435   # Microsoft Excel
+        - 462054704   # Microsoft Word
+        - 290986013   # Deliveries
+        - 1480933944  # Vimari
+        - 1474276998  # HP Smart
+        - 1451685025  # WireGuard
+        - 1448441317  # Scrap Paper
+        - 1295203466  # Microsoft Remote Desktop
+        - 1289583905  # Pixelmator Pro
+        - 1284863847  # Unsplash Wallpapers
+        - 1055511498  # Day One
 
     - name: Copy zshrc into place
       copy:
