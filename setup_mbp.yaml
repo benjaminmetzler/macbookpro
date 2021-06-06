@@ -3,87 +3,96 @@
   connection: local
 
   tasks:
+
+    - name: create folders
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "~/.config"
+        - "~/.zsh_logs"
+
     - name: check if homebrew is installed
       stat:
         path: /usr/local/bin/brew
       register: brew_exists
 
     - name: install homebrew
-      shell: yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      shell: echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       when: not brew_exists.stat.exists
+      
 
-    - name: update homebrew and homebrew installed apps
-      homebrew:
-        update_homebrew: yes
-        upgrade_all: yes
+    # - name: update homebrew and homebrew installed apps
+    #   homebrew:
+    #     update_homebrew: yes
+    #     upgrade_all: yes
 
-    - name: install base tools (homebrew)
-      homebrew:
-        name:
-          - python@3.9
-          - ffmpeg
-          - git
-          - imagemagick
-          - mas
-          - nmap
-          - rsync
-          - starship
-          - the_silver_searcher
-          - tmate
-          - tmux
-          - watch
-          - wget
-          - youtube-dl
-        state: present
+    # - name: install base tools (homebrew)
+    #   homebrew:
+    #     name:
+    #       - python@3.9
+    #       - ffmpeg
+    #       - git
+    #       - imagemagick
+    #       - mas
+    #       - nmap
+    #       - rsync
+    #       - starship
+    #       - the_silver_searcher
+    #       - tmate
+    #       - tmux
+    #       - watch
+    #       - wget
+    #       - youtube-dl
+    #     state: present
 
-    - name: install apps (homebrew)
-      homebrew_cask:
-        name:
-          - 1password
-          - alfred
-          - backblaze
-          - bettertouchtool
-          - firefox
-          - font-source-code-pro
-          - iterm
-          - itsycal
-          - java
-          - macvim
-          - qbittorrent
-          - rectangle
-          - visual-studio-code
-          - vlc
-        state: present
+    # - name: install apps (homebrew)
+    #   homebrew_cask:
+    #     name:
+    #       - 1password
+    #       - alfred
+    #       - backblaze
+    #       - firefox
+    #       - font-source-code-pro
+    #       - iterm
+    #       - itsycal
+    #       - java
+    #       - macvim
+    #       - qbittorrent
+    #       - rectangle
+    #       - visual-studio-code
+    #       - vlc
+    #     state: present
         
-    - name: install mac store apps
-      command: "mas install {{ item }}"
-      loop:
-        - 890031187   # Marked 2
-        - 462062816   # Microsoft PowerPoint
-        - 462058435   # Microsoft Excel
-        - 462054704   # Microsoft Word
-        - 290986013   # Deliveries
-        - 1480933944  # Vimari
-        - 1474276998  # HP Smart
-        - 1451685025  # WireGuard
-        - 1448441317  # Scrap Paper
-        - 1295203466  # Microsoft Remote Desktop
-        - 1289583905  # Pixelmator Pro
-        - 1284863847  # Unsplash Wallpapers
-        - 1055511498  # Day One
+    # - name: install mac store apps
+    #   command: "mas install {{ item }}"
+    #   loop:
+    #     - 890031187   # Marked 2
+    #     - 462062816   # Microsoft PowerPoint
+    #     - 462058435   # Microsoft Excel
+    #     - 462054704   # Microsoft Word
+    #     - 290986013   # Deliveries
+    #     - 1480933944  # Vimari
+    #     - 1474276998  # HP Smart
+    #     - 1451685025  # WireGuard
+    #     - 1448441317  # Scrap Paper
+    #     - 1295203466  # Microsoft Remote Desktop
+    #     - 1289583905  # Pixelmator Pro
+    #     - 1284863847  # Unsplash Wallpapers
+    #     - 1055511498  # Day One
 
-    - name: Copy zshrc into place
-      copy:
-        src: ./zshrc.template
-        dest: ~/.zshrc
-        owner: "{{ ansible_user_id }}"
-        group: staff
-        mode: '0644'
+    # - name: copy zshrc into place
+    #   copy:
+    #     src: ./zshrc.template
+    #     dest: ~/.zshrc
+    #     owner: "{{ ansible_user_id }}"
+    #     group: staff
+    #     mode: '0644'
 
-    - name: Copy starship prompt configuration into place
-      copy:
-        src: ./starship.toml.template
-        dest: ~/.config/starship.toml
-        owner: "{{ ansible_user_id }}"
-        group: staff
-        mode: '0644'
+    # - name: copy starship prompt configuration into place
+    #   copy:
+    #     src: ./starship.toml.template
+    #     dest: ~/.config/starship.toml
+    #     owner: "{{ ansible_user_id }}"
+    #     group: staff
+    #     mode: '0644'
