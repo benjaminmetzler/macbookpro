@@ -12,3 +12,6 @@ sudo pip3 install -Iv ansible
 
 # run ansible to do the rest
 ansible-playbook setup_mbp.yaml
+
+# tweak osx
+sh osx_tweaks.sh
