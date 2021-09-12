@@ -11,6 +11,28 @@
       loop:
         - "~/.config"
         - "~/.zsh_logs"
+     
+    - name: install and configure oh-my-zsh
+      block:
+
+        - name: install oh-my-zsh
+          shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+        - name: install oh-my-zsh theme
+          copy:
+            src: ./omz-theme.template
+            dest: ~/.oh-my-zsh/themes/mine.zsh-theme
+            owner: "{{ ansible_user_id }}"
+            group: staff
+            mode: '0644'
+
+        - name: install zshrc
+          copy:
+            src: ./zshrc.template
+            dest: ~/.zshrc
+            owner: "{{ ansible_user_id }}"
+            group: staff
+            mode: '0644'
 
     - name: check if homebrew is installed
       stat:
@@ -21,7 +43,6 @@
       shell: echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       when: not brew_exists.stat.exists
       
-
     - name: update homebrew and homebrew installed apps
       homebrew:
         update_homebrew: yes
@@ -30,14 +51,16 @@
     - name: install base tools (homebrew)
       homebrew:
         name:
-          - python@3.9
+          - borg
+          - espanso
           - ffmpeg
           - git
           - imagemagick
+          - maccy
           - mas
           - nmap
+          - python@3.9
           - rsync
-          - starship
           - the_silver_searcher
           - tmate
           - tmux
@@ -57,8 +80,6 @@
           - iterm
           - itsycal
           - java
-          - macvim
-          - qbittorrent
           - rectangle
           - visual-studio-code
           - vlc
@@ -81,18 +102,3 @@
         - 1284863847  # Unsplash Wallpapers
         - 1055511498  # Day One
 
-    - name: copy zshrc into place
-      copy:
-        src: ./zshrc.template
-        dest: ~/.zshrc
-        owner: "{{ ansible_user_id }}"
-        group: staff
-        mode: '0644'
-
-    - name: copy starship prompt configuration into place
-      copy:
-        src: ./starship.toml.template
-        dest: ~/.config/starship.toml
-        owner: "{{ ansible_user_id }}"
-        group: staff
-        mode: '0644'

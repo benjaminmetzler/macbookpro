@@ -1,3 +1,6 @@
+# oh-my-zsh configuration
+export ZSH="/Users/ben/.oh-my-zsh"
+ZSH_THEME="mine"
 
 # capture all commands to a log file
 export ZSH_LOGS=~/.zsh_logs
@@ -6,23 +9,23 @@ export LOG_ZSH_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H
 precmd() { eval "$LOG_ZSH_COMMAND" }
 
 # Grep though command logs
-function hg { grep "$1" ~/.zsh_logs/*.log }
-function hg1 { grep "$1" ~/.zsh_logs/${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; }
+function hg { grep "$1" ${ZSH_LOGS}/*.log }
+function hg1 { grep "$1" ${ZSH_LOGS}/zsh-history-$(date "+%Y-%m-%d").log; }
 
 # mark and jump directories
 # https://www.datascienceworkshops.com/blog/quickly-navigate-your-filesystem-from-the-command-line/
 export MARKPATH=$HOME/.marks
 function jump { 
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
+	cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
 }
 function mark { 
-    mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
+	mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
 function unmark { 
-    rm -if "$MARKPATH/$1"
+	rm -if "$MARKPATH/$1"
 }
 function marks {
-    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/    -/g' && echo
+	ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/	-/g' && echo
 }
 
 # Aliases
@@ -34,22 +37,3 @@ unsetopt nomatch
 
 # Tell homebrew to not autoupdate every single time I run it (just once a week).
 export HOMEBREW_AUTO_UPDATE_SECS=604800
-
-# Delete a given line number in the known_hosts file.
-knownrm() {
- re='^[0-9]+$'
- if ! [[ $1 =~ $re ]] ; then
-   echo "error: line number missing" >&2;
- else
-   sed -i '' "$1d" ~/.ssh/known_hosts
- fi
-}
-
-
-# Allow history search via up/down keys.
-source ${share_path}/zsh-history-substring-search/zsh-history-substring-search.zsh
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
-
-# start up starship prompt
-eval "$(starship init zsh)"

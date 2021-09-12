@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# install brew
+yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# install git
+brew install git
+
+# install ansible
+sudo pip3 install --upgrade pip
+sudo pip3 install -Iv ansible
+
+# run ansible to do the rest
+ansible-playbook setup_mbp.yaml
