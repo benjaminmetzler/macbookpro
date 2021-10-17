@@ -75,7 +75,6 @@
           - 1password
           - alfred
           - backblaze
-          - boop
           - firefox
           - font-source-code-pro
           - iina
@@ -84,7 +83,6 @@
           - java
           - rectangle
           - visual-studio-code
-          - vlc
         state: present
         
     - name: install mac store apps
