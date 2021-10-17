@@ -75,13 +75,17 @@
           - 1password
           - alfred
           - backblaze
+          - bartender
           - firefox
           - font-source-code-pro
           - iina
           - iterm
           - itsycal
           - java
+          - microsoft-edge
+          - moonlight
           - rectangle
+          - steam
           - visual-studio-code
         state: present
         
@@ -89,9 +93,6 @@
       command: "mas install {{ item }}"
       loop:
         - 890031187   # Marked 2
-        - 462062816   # Microsoft PowerPoint
-        - 462058435   # Microsoft Excel
-        - 462054704   # Microsoft Word
         - 290986013   # Deliveries
         - 1480933944  # Vimari
         - 1474276998  # HP Smart
@@ -101,4 +102,5 @@
         - 1289583905  # Pixelmator Pro
         - 1284863847  # Unsplash Wallpapers
         - 1055511498  # Day One
+        - 1055273043  # PDF Expert
 
