@@ -61,7 +61,7 @@
           - nmap
           - python@3.9
           - rsync
-          - the_silver_searcher
+          - the_silver_searcher          
           - tmate
           - tmux
           - watch
@@ -76,6 +76,7 @@
           - alfred
           - backblaze
           - bartender
+          - beyond-compare
           - firefox
           - font-source-code-pro
           - google-chrome
