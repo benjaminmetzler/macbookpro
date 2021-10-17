@@ -74,6 +74,7 @@
         name:
           - 1password
           - alfred
+          - arq
           - backblaze
           - bartender
           - beyond-compare
